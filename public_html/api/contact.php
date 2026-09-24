@@ -11,9 +11,10 @@
  *   - validación en servidor, honeypot, rate limit por IP con fichero
  *   - límite de tamaño (413), checkbox RGPD obligatorio, selector de sector
  *   - SIEMPRE persiste el mensaje en private/contact-messages.jsonl
- *   - envía por SMTP de Hestia solo si no está en dry-run y hay config
- *   - si el envío falla, el mensaje queda persistido, se registra el error y
- *     el visitante ve confirmación normal (nunca se revela el fallo)
+ *   - envía por SMTP solo si no está en dry-run y hay config (producción: Microsoft 365)
+ *   - si el envío falla, el mensaje queda persistido, el error de SMTP se
+ *     guarda en el .jsonl (campo smtp_error) y el visitante ve confirmación
+ *     normal (nunca se revela el fallo)
  *   - respuesta JSON; formulario con fetch sin recargar (+ fallback sin JS)
  *
  * Configuración: private/contact-config.php (fuera de public_html) o
@@ -190,14 +191,17 @@ function persist(array $config, array $record): void
     }
 }
 
-function sendMail(array $config, array $c): string
+function sendMail(array $config, array $c): array
 {
+    // Devuelve ['status' => ..., 'error' => ...]; 'error' solo se rellena
+    // cuando el envío falla (contenido de $mail->ErrorInfo, se persiste como
+    // smtp_error en contact-messages.jsonl).
     if ($config['dry_run']) {
-        return 'dry-run';
+        return ['status' => 'dry-run', 'error' => ''];
     }
     if (empty($config['smtp']['host']) || empty($config['mail_from']) || empty($config['mail_to'])) {
         error_log('[contact] SMTP no configurado; mensaje persistido de ' . $c['email']);
-        return 'not-configured';
+        return ['status' => 'not-configured', 'error' => ''];
     }
     $mail = new PHPMailer(true);
     try {
@@ -231,10 +235,14 @@ function sendMail(array $config, array $c): string
         $mail->Body = implode("\n", $body);
         $mail->isHTML(false);
         $mail->send();
-        return 'sent';
+        return ['status' => 'sent', 'error' => ''];
     } catch (PHPMailerException | Exception $e) {
-        error_log('[contact] Error SMTP: ' . $e->getMessage() . '; mensaje persistido de ' . $c['email']);
-        return 'error';
+        $err = trim((string) $mail->ErrorInfo);
+        if ($err === '') {
+            $err = $e->getMessage();
+        }
+        error_log('[contact] Error SMTP: ' . $err . '; mensaje persistido de ' . $c['email']);
+        return ['status' => 'error', 'error' => $err];
     }
 }
 
@@ -304,15 +312,16 @@ if ($errors) {
     respond(['ok' => false, 'errors' => $errors], 400);
 }
 
-$outcome = sendMail($config, [
+$sm = sendMail($config, [
     'name' => $name,
     'email' => $email,
     'phone' => $phone,
     'sector' => $sector,
     'message' => $message,
 ]);
+$outcome = $sm['status'];
 
-persist($config, [
+$record = [
     'ts' => gmdate('c'),
     'ip' => $ip,
     'name' => $name,
@@ -321,7 +330,11 @@ persist($config, [
     'sector' => $sector,
     'message' => $message,
     'smtp' => $outcome,
-]);
+];
+if ($sm['error'] !== '') {
+    $record['smtp_error'] = $sm['error'];
+}
+persist($config, $record);
 
 error_log('[contact] persistido (' . $outcome . ') desde ' . $ip . ': ' . $email);
 respond(['ok' => true], 200);

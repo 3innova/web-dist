@@ -1,6 +1,6 @@
 source_repo: 3innova/web
-source_commit: 61f5a3103497ccddf76a0313bc8e02853cf92fea
-source_message: pull-deploy: root/internet checks, tarball por SHA, public_html exacto, verificación post-deploy; fix rateLimited en contact.php
-source_committed_at: 2026-09-24T16:32:26Z
-built_at: 2026-09-24T16:33:00Z
+source_commit: 83d3b11abdc8a92d993a2fb0b5e468267fe16fdf
+source_message: Formulario: SMTP Microsoft 365 (docs), smtp_error en el jsonl; web-dist publica api/ solo contact.php+vendor
+source_committed_at: 2026-09-24T17:14:27Z
+built_at: 2026-09-24T17:15:04Z
 built_from: 3innovalab01 (publish.sh)
