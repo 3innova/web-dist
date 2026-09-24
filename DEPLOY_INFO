@@ -1,0 +1,6 @@
+source_repo: 3innova/web
+source_commit: ecd949763364337adc4a2ddc70115851053fb61d
+source_message: Redirecciones y 404 en PHP (compatibles con Hestia sin config)
+source_committed_at: 2026-09-24T14:18:00Z
+built_at: 2026-09-24T16:06:51Z
+built_from: 3innovalab01 (publish.sh)
