@@ -1,6 +1,6 @@
 source_repo: 3innova/web
-source_commit: ecd949763364337adc4a2ddc70115851053fb61d
-source_message: Redirecciones y 404 en PHP (compatibles con Hestia sin config)
-source_committed_at: 2026-09-24T14:18:00Z
-built_at: 2026-09-24T16:06:51Z
+source_commit: 61f5a3103497ccddf76a0313bc8e02853cf92fea
+source_message: pull-deploy: root/internet checks, tarball por SHA, public_html exacto, verificación post-deploy; fix rateLimited en contact.php
+source_committed_at: 2026-09-24T16:32:26Z
+built_at: 2026-09-24T16:33:00Z
 built_from: 3innovalab01 (publish.sh)

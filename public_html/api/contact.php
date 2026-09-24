@@ -270,7 +270,7 @@ if (str_contains($contentType, 'application/x-www-form-urlencoded') || str_conta
 }
 
 $ip = clientIp();
-if ($rateLimited($config, $ip)) {
+if (rateLimited($config, $ip)) {
     respond(['ok' => false, 'error' => 'Demasiadas peticiones. Inténtalo de nuevo en un minuto.'], 429);
 }
 
