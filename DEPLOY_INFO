@@ -1,6 +1,6 @@
 source_repo: 3innova/web
-source_commit: 1677d809278a22e2eba68b7bd2b0f7dc57ebd3d8
-source_message: SEO: eliminar JSON-LD Product/SoftwareApplication (Search Console: falta offers/review/aggregateRating)
-source_committed_at: 2026-09-25T10:39:33Z
-built_at: 2026-09-25T10:40:05Z
+source_commit: 44ab3049fa7f94826c99beba4e272413961e1b33
+source_message: PageSpeed/a11y: contraste AA por tokens, menú móvil accesible, CSS inline y CSP (Lighthouse a11y 100)
+source_committed_at: 2026-09-25T11:08:51Z
+built_at: 2026-09-25T11:09:37Z
 built_from: 3innovalab01 (publish.sh)
