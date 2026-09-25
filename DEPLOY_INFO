@@ -1,6 +1,6 @@
 source_repo: 3innova/web
-source_commit: 83d3b11abdc8a92d993a2fb0b5e468267fe16fdf
-source_message: Formulario: SMTP Microsoft 365 (docs), smtp_error en el jsonl; web-dist publica api/ solo contact.php+vendor
-source_committed_at: 2026-09-24T17:14:27Z
-built_at: 2026-09-24T17:15:04Z
+source_commit: 1677d809278a22e2eba68b7bd2b0f7dc57ebd3d8
+source_message: SEO: eliminar JSON-LD Product/SoftwareApplication (Search Console: falta offers/review/aggregateRating)
+source_committed_at: 2026-09-25T10:39:33Z
+built_at: 2026-09-25T10:40:05Z
 built_from: 3innovalab01 (publish.sh)
