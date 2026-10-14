@@ -2,5 +2,5 @@ source_repo: 3innova/web
 source_commit: 32c8a0e1f11faa1936a68ea3e327b84933f39dea
 source_message: Merge pull request #2 from 3innova/fix/faq-ultracongelados
 source_committed_at: 2026-10-07T14:55:35+02:00
-built_at: 2026-10-14T08:50:44Z
+built_at: 2026-10-14T09:23:12Z
 built_from: 3innovalab01 (publish.sh)
